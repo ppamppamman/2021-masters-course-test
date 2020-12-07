@@ -1,18 +1,12 @@
+import * as util from './util.js';
+
 class PlaneCube {
 	constructor() {
-		this.current = [
-			['R', 'R', 'W'],
-			['G', 'C', 'W'],
-			['G', 'B', 'B'],
-		];
+		this.current = util.reset();
 	}
 
 	reset() {
-		this.current = [
-			['R', 'R', 'W'],
-			['G', 'C', 'W'],
-			['G', 'B', 'B'],
-		];
+		this.current = util.reset();
 		return this.getCurrent();
 	}
 
@@ -25,82 +19,47 @@ class PlaneCube {
 	}
 
 	operate(command) {
-		let line, target;
-		switch (command) {
-			case 'U':
-				line = this.current[0];
-				target = line.shift();
-				line.push(target);
-				this.current[0] = line;
-				return this.getCurrent();
-			case "U'":
-				line = this.current[0];
-				target = line.pop();
-				line.unshift(target);
-				this.current[0] = line;
-				return this.getCurrent();
-			case 'R':
-				line = [];
-				for (let each of this.current) {
-					line.push(each[each.length - 1]);
-					each[each.length - 1] = null;
-				}
-				target = line.shift();
-				line.push(target);
-				for (let [i, each] of this.current.entries()) {
-					each[each.length - 1] = line[i];
-				}
-				return this.getCurrent();
-			case "R'":
-				line = [];
-				for (let each of this.current) {
-					line.push(each[each.length - 1]);
-					each[each.length - 1] = null;
-				}
-				target = line.pop();
-				line.unshift(target);
-				for (let [i, each] of this.current.entries()) {
-					each[each.length - 1] = line[i];
-				}
-				return this.getCurrent();
-			case 'L':
-				line = [];
-				for (let each of this.current) {
-					line.push(each[0]);
-					each[0] = null;
-				}
-				target = line.pop();
-				line.unshift(target);
-				for (let [i, each] of this.current.entries()) {
-					each[0] = line[i];
-				}
-				return this.getCurrent();
-			case "L'":
-				line = [];
-				for (let each of this.current) {
-					line.push(each[0]);
-					each[0] = null;
-				}
-				target = line.shift();
-				line.push(target);
-				for (let [i, each] of this.current.entries()) {
-					each[0] = line[i];
-				}
-				return this.getCurrent();
-			case 'B':
-				line = this.current.slice(-1)[0];
-				target = line.pop();
-				line.unshift(target);
-				this.current[this.current.length - 1] = line;
-				return this.getCurrent();
-			case "B'":
-				line = this.current.slice(-1)[0];
-				target = line.shift();
-				line.push(target);
-				this.current[this.current.length - 1] = line;
-				return this.getCurrent();
-			default:
-				return '';
+		let newLine;
+		if (command == util.commands.UP_FORWARD) {
+			newLine = util.push('left', this.current[0]);
+			this.current[0] = newLine;
+			return this.getCurrent();
+		} else if (command == util.commands.UP_BACKWARD) {
+			newLine = util.push('right', this.current[0]);
+			this.current[0] = newLine;
+			return this.getCurrent();
+		} else if (command == util.commands.RIGHT_FORWARD) {
+			newLine = util.push('left', [this.current[0][2], this.current[1][2], this.current[2][2]]);
+			for (let [i, each] of this.current.entries()) {
+				each[each.length - 1] = newLine[i];
+			}
+			return this.getCurrent();
+		} else if (command == util.commands.RIGHT_BACKWARD) {
+			newLine = util.push('right', [this.current[0][2], this.current[1][2], this.current[2][2]]);
+			for (let [i, each] of this.current.entries()) {
+				each[each.length - 1] = newLine[i];
+			}
+			return this.getCurrent();
+		} else if (command == util.commands.LEFT_FORWARD) {
+			newLine = util.push('right', [this.current[0][0], this.current[1][0], this.current[2][0]]);
+			for (let [i, each] of this.current.entries()) {
+				each[0] = newLine[i];
+			}
+			return this.getCurrent();
+		} else if (command == util.commands.LEFT_BACKWARD) {
+			newLine = util.push('left', [this.current[0][0], this.current[1][0], this.current[2][0]]);
+			for (let [i, each] of this.current.entries()) {
+				each[0] = newLine[i];
+			}
+			return this.getCurrent();
+		} else if (command == util.commands.BOTTOM_FORWARD) {
+			newLine = util.push('right', this.current.slice(-1)[0]);
+			this.current[this.current.length - 1] = newLine;
+			return this.getCurrent();
+		} else if (command == util.commands.BOTTOM_BACKWARD) {
+			newLine = util.push('left', this.current.slice(-1)[0]);
+			this.current[this.current.length - 1] = newLine;
+			return this.getCurrent();
 		}
 	}
 }
