@@ -48,7 +48,6 @@ class PlaneCube {
 				target = line.shift();
 				line.push(target);
 				for (let [i, each] of this.current.entries()) {
-					line.push(each[each.length - 1]);
 					each[each.length - 1] = line[i];
 				}
 				return this.getCurrent();
@@ -61,7 +60,6 @@ class PlaneCube {
 				target = line.pop();
 				line.unshift(target);
 				for (let [i, each] of this.current.entries()) {
-					line.push(each[each.length - 1]);
 					each[each.length - 1] = line[i];
 				}
 				return this.getCurrent();
@@ -74,7 +72,6 @@ class PlaneCube {
 				target = line.pop();
 				line.unshift(target);
 				for (let [i, each] of this.current.entries()) {
-					line.push(each[0]);
 					each[0] = line[i];
 				}
 				return this.getCurrent();
@@ -87,9 +84,9 @@ class PlaneCube {
 				target = line.shift();
 				line.push(target);
 				for (let [i, each] of this.current.entries()) {
-					line.push(each[0]);
 					each[0] = line[i];
 				}
+				return this.getCurrent();
 			case 'B':
 				line = this.current.slice(-1)[0];
 				target = line.pop();
@@ -102,7 +99,7 @@ class PlaneCube {
 				line.push(target);
 				this.current[this.current.length - 1] = line;
 				return this.getCurrent();
-			case "Q'":
+			default:
 				return '';
 		}
 	}
