@@ -13,6 +13,18 @@ function input() {
 	});
 }
 function push(word, count, direction) {
+	while (count != 0) {
+		if (direction == 'L') {
+			let target = word[0];
+			word = word.substring(1, word.length);
+			word = word + target;
+		} else {
+			let target = word[word.length - 1];
+			word = word.substring(0, word.length - 1);
+			word = target + word;
+		}
+		count -= 1;
+	}
 	return word;
 }
 
