@@ -7,16 +7,17 @@ function input() {
 
 	return new Promise((resolve) => {
 		rl.question('> ', (answer) => {
-			rl.close();
 			resolve(answer);
+			rl.close();
 		});
 	});
 }
 function correction(count, direction) {
 	count = Math.abs(count);
-	if (direction == 'L' || direction == 'l') {
+	direction = direction.toUpperCase();
+	if (direction == 'L') {
 		direction = 'R';
-	} else if (direction == 'R' || direction == 'r') {
+	} else if (direction == 'R') {
 		direction = 'L';
 	}
 	return [count, direction];
@@ -24,7 +25,7 @@ function correction(count, direction) {
 
 function push(word, count, direction) {
 	let input = {};
-	[input.word, input.count, input.direction] = [word, count, direction];
+	[input.word, input.count, input.direction] = [word, count, direction.toUpperCase()];
 
 	if (count < 0) {
 		[input.count, input.direction] = correction(count, direction);
@@ -32,11 +33,11 @@ function push(word, count, direction) {
 
 	while (input.count != 0) {
 		let target;
-		if (input.direction == 'L' || input.direction == 'l') {
+		if (input.direction == 'L') {
 			target = input.word[0];
 			input.word = input.word.substring(1, input.word.length);
 			input.word = input.word + target;
-		} else if (input.direction == 'R' || input.direction == 'r') {
+		} else if (input.direction == 'R') {
 			target = input.word[input.word.length - 1];
 			input.word = input.word.substring(0, input.word.length - 1);
 			input.word = target + input.word;
@@ -47,12 +48,9 @@ function push(word, count, direction) {
 }
 
 async function init() {
-	console.log('(To exit, press ^C again or ^D or type .exit)');
 	while (true) {
 		let values = await input();
-		if (values == '.exit') {
-			break;
-		} else if (values.split(' ').length != 3) {
+		if (values.split(' ').length != 3) {
 			console.log('wrong input');
 			continue;
 		}
