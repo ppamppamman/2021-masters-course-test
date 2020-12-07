@@ -1,5 +1,6 @@
+import * as readline from 'readline';
+
 function input() {
-	const readline = require('readline');
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
@@ -12,6 +13,7 @@ function input() {
 		});
 	});
 }
+
 function correction(count, direction) {
 	count = Math.abs(count);
 	if (direction == 'L') {
@@ -27,7 +29,7 @@ function push(word, count, direction) {
 	[input.word, input.count, input.direction] = [word, count, direction.toUpperCase()];
 
 	if (count < 0) {
-		[input.count, input.direction] = correction(count, direction);
+		[input.count, input.direction] = correction(input.count, input.direction);
 	}
 
 	while (input.count != 0) {
@@ -46,16 +48,25 @@ function push(word, count, direction) {
 	return input.word;
 }
 
+function isWrongCommand(inputCommands) {
+	if (inputCommands.length !== 3 || !Number.isInteger(Number(inputCommands[1]))) {
+		return true;
+	} else if (inputCommands[2].toUpperCase() !== 'L' && inputCommands[2].toUpperCase() !== 'R') {
+		return true;
+	}
+	return false;
+}
+
 async function init() {
 	while (true) {
 		let values = await input();
-		if (values.split(' ').length != 3) {
-			console.log('wrong input');
+		values = values.split(' ');
+		if (isWrongCommand(values)) {
+			console.log('wrong input \n');
 			continue;
 		}
-		values = values.split(' ');
 		let result = push(values[0], values[1], values[2]);
-		console.log(result);
+		console.log(`${result} \n`);
 	}
 }
 
