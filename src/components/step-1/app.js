@@ -14,7 +14,6 @@ function input() {
 }
 function correction(count, direction) {
 	count = Math.abs(count);
-	direction = direction.toUpperCase();
 	if (direction == 'L') {
 		direction = 'R';
 	} else if (direction == 'R') {
