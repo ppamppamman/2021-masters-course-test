@@ -56,7 +56,7 @@ async function game(planeCube) {
 		console.log(`reset complete\n${planeCube.reset()}`);
 		return false;
 	} else if (isWrongCommand(values)) {
-		console.log('wrong input');
+		console.log('wrong input\n');
 		return false;
 	}
 	for (let command of parseCommand(values)) {
