@@ -2,7 +2,6 @@ import * as readline from 'readline';
 import PlaneCube from './planeCube.js';
 
 function input() {
-	// const readline = require('readline');
 	const rl = readline.createInterface({
 		input: process.stdin,
 		output: process.stdout,
@@ -10,8 +9,8 @@ function input() {
 
 	return new Promise((resolve) => {
 		rl.question('CUBE> ', (answer) => {
-			rl.close();
 			resolve(answer);
+			rl.close();
 		});
 	});
 }
@@ -31,7 +30,7 @@ function parseCommand(inputCommands) {
 	inputCommands = inputCommands.split('');
 	let parsed = [];
 	inputCommands.forEach((command) => {
-		if (command != "'") {
+		if (command !== "'") {
 			parsed.push(command);
 		} else {
 			parsed[parsed.length - 1] = parsed.slice(-1) + command;
@@ -43,28 +42,30 @@ function parseCommand(inputCommands) {
 export async function init() {
 	const planeCube = new PlaneCube();
 	console.log(planeCube.getCurrent());
-
 	while (true) {
-		let values = await input();
-		if (values == '.exit') {
-			return;
-		} else if (values == '.reset') {
-			console.log('reset complete', '\n');
-			console.log(planeCube.reset());
-			continue;
-		} else if (isWrongCommand(values)) {
-			console.log('wrong input');
-			continue;
-		}
-		let commands = parseCommand(values);
-		for (let command of commands) {
-			if (command == 'Q') {
-				console.log('Bye~');
-				return;
-			} else {
-				console.log(command);
-				console.log(planeCube.operate(command));
-			}
+		let isEnd = await game(planeCube);
+		if (isEnd) {
+			break;
 		}
 	}
+}
+
+async function game(planeCube) {
+	let values = await input();
+	if (values === '.reset') {
+		console.log(`reset complete\n${planeCube.reset()}`);
+		return false;
+	} else if (isWrongCommand(values)) {
+		console.log('wrong input');
+		return false;
+	}
+	for (let command of parseCommand(values)) {
+		if (command === 'Q') {
+			console.log('Bye~');
+			return true;
+		} else {
+			console.log(`${command}\n${planeCube.operate(command)}`);
+		}
+	}
+	return false;
 }
