@@ -1,5 +1,76 @@
 # 루빅스 큐브 구현
 
+---
+
+## 과제 구현 설명
+
+### 프로세스
+
+- readline을 통해 커맨드를 입력받는다.
+- 입력받는 커맨드를 파싱하여 작은 따옴표 커맨드를 올바르게 처리하며, 오류를 검사한다.
+- 커맨드 순서대로 큐브를 작동시킨다. 작동방식은 주어진 과제 요구사항을 따르도록 한다.
+
+### 코드설명
+
+app.js
+
+- input()  
+  readline을 활용해 유저의 입력을 받는다.
+  @returns {Promise}
+
+- parseCommand()  
+  입력받은 커맨드를 올바르게 Array로 바꾼다.
+  @param {string} inputCommands  
+  @returns {Array<string>}
+
+- isWrongCommand()  
+  입력받은 문자열의 포맷에 오류가 있는지 검사한다.  
+  @param {Array} inputCommands  
+  @returns {boolean}
+
+- init()  
+  실행에 필요한 함수이며, game함수의 결과를 확인해 추가 실행 여부를 결정한다.
+
+- game()  
+  문자열 입력 과정부터 변환 과정까지를 진행시키며, 종료 커맨드 (Q, Ctrl+C)가 input 될 때까지 반복하도록 한다.  
+  @param {PlanCube} planeCube  
+  @retruns {boolean}
+
+planeCube.js
+
+- constructor  
+  초기 상태를 담는다.  
+  @attr {Array\<Array\<string\>\>} this.current
+
+- reset()  
+  초기 상태로 되돌리며, 해당 상태를 출력한다.  
+  @returns {Array\<Array\<string\>\>}
+
+- getCurrent()  
+  현재 상태를 출력할 수 있도록 string을 만들어 리턴한다.  
+  @returns {string}
+
+- operate()  
+  큐브의 작동을 커맨드에 맞게 결정한다.  
+  @param {string} command
+
+util.js
+
+- commands  
+  enum처럼 활용하기 위한 커맨드 Object
+
+- push()  
+  방향을 확인해서 문자 어레이를 변경하는 함수
+  @param {string} direction  
+  @param {Array<string>} line  
+  @returns {Array<string>}
+
+- reset()  
+  큐브를 초기 상태로 되돌리기 위한 함수  
+  @returns {Array\<Array\<string\>\>}
+
+---
+
 ## 2단계 프로젝트 실행 및 사용
 
 - 실행
