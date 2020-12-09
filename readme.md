@@ -2,6 +2,44 @@
 
 ---
 
+## 2단계 프로젝트 실행 및 사용
+
+- 실행
+
+```
+npm start
+```
+
+- 사용
+
+```
+R R W
+G C W
+G B B
+
+CUBE> U
+U
+R W R
+G C W
+G B B
+
+CUBE> R'L'
+R'
+R W B
+G C R
+G B W
+
+L'
+G W B
+G C R
+R B W
+
+CUBE> Q
+Bye~
+```
+
+---
+
 ## 과제 구현 설명
 
 ### 프로세스
@@ -68,44 +106,6 @@ util.js
 - reset()  
   큐브를 초기 상태로 되돌리기 위한 함수  
   @returns {Array\<Array\<string\>\>}
-
----
-
-## 2단계 프로젝트 실행 및 사용
-
-- 실행
-
-```
-npm start
-```
-
-- 사용
-
-```
-R R W
-G C W
-G B B
-
-CUBE> U
-U
-R W R
-G C W
-G B B
-
-CUBE> R'L'
-R'
-R W B
-G C R
-G B W
-
-L'
-G W B
-G C R
-R B W
-
-CUBE> Q
-Bye~
-```
 
 ---
 
