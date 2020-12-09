@@ -15,11 +15,11 @@
 app.js
 
 - input()  
-  readline을 활용해 유저의 입력을 받는다.
+  readline을 활용해 유저의 입력을 받는다.  
   @returns {Promise}
 
 - parseCommand()  
-  입력받은 커맨드를 올바르게 Array로 바꾼다.
+  입력받은 커맨드를 올바르게 Array로 바꾼다.  
   @param {string} inputCommands  
   @returns {Array<string>}
 
@@ -60,7 +60,7 @@ util.js
   enum처럼 활용하기 위한 커맨드 Object
 
 - push()  
-  방향을 확인해서 문자 어레이를 변경하는 함수
+  방향을 확인해서 문자 어레이를 변경하는 함수  
   @param {string} direction  
   @param {Array<string>} line  
   @returns {Array<string>}
