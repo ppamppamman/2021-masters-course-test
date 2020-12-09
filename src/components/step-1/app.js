@@ -65,7 +65,7 @@ async function init() {
 			console.log('wrong input \n');
 			continue;
 		}
-		let result = push(values[0], values[1], values[2]);
+		let result = push(...values);
 		console.log(`${result} \n`);
 	}
 }
