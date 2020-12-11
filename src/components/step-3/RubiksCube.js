@@ -23,7 +23,15 @@ RubiksCube.prototype.init = function () {
 };
 
 // 현재 상태 확인
-RubiksCube.prototype.getCurrent = function () {};
+RubiksCube.prototype.getCurrent = function () {
+	let result = '';
+	for (let [side, value] of Object.entries(this.cube)) {
+		let result = '';
+		value.plane.data.forEach((e) => (result += e.join(' ') + '\n'));
+		console.log(`${side} : \n${result} `);
+	}
+	return result;
+};
 
 // 정방향 회전
 RubiksCube.prototype.rotateForward = function (side) {
