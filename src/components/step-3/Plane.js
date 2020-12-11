@@ -52,7 +52,8 @@ Plane.prototype.rotateBackward = function () {
 	for (const [i, row] of this.data.entries()) {
 		for (const [j, col] of row.entries()) {
 			this.data[i][j] = originalData[j][row.length - 1 - i];
-			// console.log(j, row.length - 1 - i);
 		}
 	}
 };
+
+export default Plane;
