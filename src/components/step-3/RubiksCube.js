@@ -28,13 +28,13 @@ RubiksCube.prototype.getCurrent = function () {};
 // 정방향 회전
 RubiksCube.prototype.rotateForward = function (side) {
 	this.rotatePlaneForward(this.cube[side].plane);
-	// 엣지 회전 추가 필요
+	this.rotateEdgesForward(this.cube[side].edges);
 };
 
 // 역방향 회전
 RubiksCube.prototype.rotateBackward = function (side) {
 	this.rotatePlaneBackward(this.cube[side].plane);
-	// 엣지 회전 추가 필요
+	this.rotateEdgesBackward(this.cube[side].edges);
 };
 
 RubiksCube.prototype.rotatePlaneForward = function (plane) {
@@ -43,6 +43,36 @@ RubiksCube.prototype.rotatePlaneForward = function (plane) {
 
 RubiksCube.prototype.rotatePlaneBackward = function (plane) {
 	plane.rotateBackward();
+};
+
+RubiksCube.prototype.rotateEdgesForward = function (edges) {
+	let targetEdgeLine = [];
+	const startEdge = Object.entries(edges.top).flat();
+
+	// 순회하며 처리
+	for (const [direction, edge] of Object.entries(edges)) {
+		const [side, lineIndexes] = Object.entries(edge).flat();
+		const originalEdgeLine = this.cube[side].plane.getData(lineIndexes);
+		this.cube[side].plane.setData(lineIndexes, targetEdgeLine);
+		targetEdgeLine = originalEdgeLine; // 마지막 line이 남는다.
+	}
+	const [startSide, startIndexes] = startEdge; //순회 후 마지막 처리
+	this.cube[startSide].plane.setData(startIndexes, targetEdgeLine);
+};
+
+RubiksCube.prototype.rotateEdgesBackward = function (edges) {
+	let targetEdgeLine = [];
+	const startEdge = Object.entries(edges.top).flat();
+
+	// 순회하며 처리
+	for (const [direction, edge] of Object.entries(edges).reverse()) {
+		const [side, lineIndexes] = Object.entries(edge).flat();
+		const originalEdgeLine = this.cube[side].plane.getData(lineIndexes);
+		this.cube[side].plane.setData(lineIndexes, targetEdgeLine);
+		targetEdgeLine = originalEdgeLine; // 마지막 line이 남는다.
+	}
+	const [startSide, startIndexes] = startEdge; //순회 후 마지막 처리
+	this.cube[startSide].plane.setData(startIndexes, targetEdgeLine);
 };
 
 export default RubiksCube;
