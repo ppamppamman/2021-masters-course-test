@@ -26,13 +26,38 @@ RubiksCube.prototype.init = function () {
 
 // 현재 상태 확인
 RubiksCube.prototype.getCurrent = function () {
-	let result = '';
-	for (let [side, value] of Object.entries(this.cube)) {
-		let result = '';
-		value.plane.data.forEach((e) => (result += e.join(' ') + '\n'));
-		console.log(`${side} : \n${result} `);
+	let currentCube = {};
+	for (const [i, [side, node]] of Object.entries(Object.entries(this.cube))) {
+		let result = [];
+		node.plane.data.forEach((row) => {
+			result.push(row.join(' '));
+		});
+		currentCube[side] = result;
 	}
-	return result;
+	let currentStatus = `
+                       ${currentCube['U'][0]}
+                       ${currentCube['U'][1]}
+                       ${currentCube['U'][2]}
+
+     ${currentCube['L'][0]}    ${currentCube['F'][0]}    ${currentCube['B'][0]}    ${currentCube['R'][0]}
+     ${currentCube['L'][1]}    ${currentCube['F'][1]}    ${currentCube['B'][1]}    ${currentCube['R'][1]}
+     ${currentCube['L'][2]}    ${currentCube['F'][2]}    ${currentCube['B'][2]}    ${currentCube['R'][2]}
+
+                       ${currentCube['D'][0]}
+                       ${currentCube['D'][1]}
+                       ${currentCube['D'][2]}
+  `;
+	return currentStatus;
+};
+
+RubiksCube.prototype.operate = function (command) {
+	if (command.includes("'")) {
+		this.rotateBackward(command[0]);
+		return this.getCurrent();
+	} else {
+		this.rotateForward(command);
+		return this.getCurrent();
+	}
 };
 
 // 정방향 회전
@@ -72,9 +97,10 @@ RubiksCube.prototype.rotateEdgesForward = function (edges) {
 
 RubiksCube.prototype.rotateEdgesBackward = function (edges) {
 	let targetEdgeLine = [];
-	const startEdge = Object.entries(edges.top).flat();
+	const startEdge = Object.entries(edges.left).flat();
 
 	// 순회하며 처리
+	// console.log(Object.entries(edges).reverse());
 	for (const [direction, edge] of Object.entries(edges).reverse()) {
 		const [side, lineIndexes] = Object.entries(edge).flat();
 		const originalEdgeLine = this.cube[side].plane.getData(lineIndexes);
@@ -84,14 +110,5 @@ RubiksCube.prototype.rotateEdgesBackward = function (edges) {
 	const [startSide, startIndexes] = startEdge; //순회 후 마지막 처리
 	this.cube[startSide].plane.setData(startIndexes, targetEdgeLine);
 };
-
-let rc = new RubiksCube();
-console.log('rotate L 1');
-rc.rotateForward('L');
-console.log('rotate L 2');
-rc.rotateForward('L');
-console.log('rotate L 1');
-rc.rotateBackward('L');
-console.log(rc.getCurrent());
 
 export default RubiksCube;
