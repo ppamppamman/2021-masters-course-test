@@ -1,3 +1,5 @@
+import PlaneNode from './PlaneNode.js';
+
 class RubiksCube {
 	constructor() {
 		this.cube = this.init();
@@ -82,5 +84,14 @@ RubiksCube.prototype.rotateEdgesBackward = function (edges) {
 	const [startSide, startIndexes] = startEdge; //순회 후 마지막 처리
 	this.cube[startSide].plane.setData(startIndexes, targetEdgeLine);
 };
+
+let rc = new RubiksCube();
+console.log('rotate L 1');
+rc.rotateForward('L');
+console.log('rotate L 2');
+rc.rotateForward('L');
+console.log('rotate L 1');
+rc.rotateBackward('L');
+console.log(rc.getCurrent());
 
 export default RubiksCube;
