@@ -21,3 +21,28 @@ RubiksCube.prototype.init = function () {
 	}
 	return planes;
 };
+
+// 현재 상태 확인
+RubiksCube.prototype.getCurrent = function () {};
+
+// 정방향 회전
+RubiksCube.prototype.rotateForward = function (side) {
+	this.rotatePlaneForward(this.cube[side].plane);
+	// 엣지 회전 추가 필요
+};
+
+// 역방향 회전
+RubiksCube.prototype.rotateBackward = function (side) {
+	this.rotatePlaneBackward(this.cube[side].plane);
+	// 엣지 회전 추가 필요
+};
+
+RubiksCube.prototype.rotatePlaneForward = function (plane) {
+	plane.rotateForward();
+};
+
+RubiksCube.prototype.rotatePlaneBackward = function (plane) {
+	plane.rotateBackward();
+};
+
+export default RubiksCube;
