@@ -52,7 +52,12 @@ RubiksCube.prototype.getCurrent = function () {
 		});
 		currentCube[side] = result;
 	}
-	let currentStatus = `
+	let status = createPrintableStatus(currentCube);
+	return status;
+};
+
+RubiksCube.prototype.createPrintableStatus = function(currentCube){
+  let currentStatus = `
                     ${currentCube['U'][0]}
                     ${currentCube['U'][1]}
                     ${currentCube['U'][2]}
@@ -65,8 +70,8 @@ RubiksCube.prototype.getCurrent = function () {
                     ${currentCube['D'][1]}
                     ${currentCube['D'][2]}
   `;
-	return currentStatus;
-};
+  return currentStatus;
+}
 
 RubiksCube.prototype.operate = function (command) {
 	if (command.includes("'")) {
