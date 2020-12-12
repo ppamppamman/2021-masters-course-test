@@ -83,7 +83,10 @@ export async function init() {
 async function game({ rubiksCube, commandCount, startTime }) {
 	let values = await input();
 	if (values === '.reset') {
-		// console.log(`reset complete\n${rubiksCube.reset()}`);
+		console.log(`reset complete\n${rubiksCube.reset()}`);
+		return { isEnd: false };
+	} else if (values === '.shuffle') {
+		console.log(`shuffle complete\n${rubiksCube.shuffle()}`);
 		return { isEnd: false };
 	} else if (isWrongCommand(values)) {
 		console.log('wrong input\n');
