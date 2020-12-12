@@ -35,17 +35,17 @@ RubiksCube.prototype.getCurrent = function () {
 		currentCube[side] = result;
 	}
 	let currentStatus = `
-                       ${currentCube['U'][0]}
-                       ${currentCube['U'][1]}
-                       ${currentCube['U'][2]}
+                    ${currentCube['U'][0]}
+                    ${currentCube['U'][1]}
+                    ${currentCube['U'][2]}
 
-     ${currentCube['L'][0]}    ${currentCube['F'][0]}    ${currentCube['B'][0]}    ${currentCube['R'][0]}
-     ${currentCube['L'][1]}    ${currentCube['F'][1]}    ${currentCube['B'][1]}    ${currentCube['R'][1]}
-     ${currentCube['L'][2]}    ${currentCube['F'][2]}    ${currentCube['B'][2]}    ${currentCube['R'][2]}
+     ${currentCube['L'][0]}     ${currentCube['F'][0]}     ${currentCube['R'][0]}     ${currentCube['B'][0]}
+     ${currentCube['L'][1]}     ${currentCube['F'][1]}     ${currentCube['R'][1]}     ${currentCube['B'][1]}
+     ${currentCube['L'][2]}     ${currentCube['F'][2]}     ${currentCube['R'][2]}     ${currentCube['B'][2]}
 
-                       ${currentCube['D'][0]}
-                       ${currentCube['D'][1]}
-                       ${currentCube['D'][2]}
+                    ${currentCube['D'][0]}
+                    ${currentCube['D'][1]}
+                    ${currentCube['D'][2]}
   `;
 	return currentStatus;
 };
@@ -100,7 +100,6 @@ RubiksCube.prototype.rotateEdgesBackward = function (edges) {
 	const startEdge = Object.entries(edges.left).flat();
 
 	// 순회하며 처리
-	// console.log(Object.entries(edges).reverse());
 	for (const [direction, edge] of Object.entries(edges).reverse()) {
 		const [side, lineIndexes] = Object.entries(edge).flat();
 		const originalEdgeLine = this.cube[side].plane.getData(lineIndexes);
