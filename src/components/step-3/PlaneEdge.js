@@ -27,29 +27,13 @@ PlaneEdge.prototype.isLinkedTo = function (place) {
 
 PlaneEdge.prototype.isAt = function (place) {
 	if (place === 'top row') {
-		return [
-			[0, 0],
-			[0, 1],
-			[0, 2],
-		];
+		return [[0, 0], [0, 1], [0, 2]];
 	} else if (place === 'bottom row') {
-		return [
-			[2, 0],
-			[2, 1],
-			[2, 2],
-		];
+		return [[2, 0], [2, 1], [2, 2]];
 	} else if (place === 'right column') {
-		return [
-			[0, 2],
-			[1, 2],
-			[2, 2],
-		];
+		return [[0, 2], [1, 2], [2, 2]];
 	} else if (place === 'left column') {
-		return [
-			[0, 0],
-			[1, 0],
-			[2, 0],
-		];
+		return [[0, 0], [1, 0], [2, 0]];
 	} else {
 		return null;
 	}
