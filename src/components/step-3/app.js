@@ -19,21 +19,31 @@ function isWrongCommand(inputCommands) {
 	const commands = ['F', 'D', 'U', 'R', 'L', 'B', 'Q', "'"];
 	const target = inputCommands.split('');
 	for (let command of target) {
-		if (!commands.includes(command)) {
-			return true;
+		if (commands.includes(command)) {
+			return false;
+		} else if (isNumeric(command)) {
+			return false;
 		}
 	}
-	return false;
+	return true;
+}
+
+function isNumeric(command) {
+	return !isNaN(Number(command));
 }
 
 function parseCommand(inputCommands) {
 	inputCommands = inputCommands.split('');
 	let parsed = [];
 	inputCommands.forEach((command) => {
-		if (command != "'") {
-			parsed.push(command);
+		if (command === "'") {
+			parsed[parsed.length - 1] = parsed.slice(-1)[0] + command;
+		} else if (isNumeric(command)) {
+			let times = Number(command) - 1;
+			let repeatedCommands = Array(times).fill(parsed.slice(-1)[0]);
+			parsed.push(...repeatedCommands);
 		} else {
-			parsed[parsed.length - 1] = parsed.slice(-1) + command;
+			parsed.push(command);
 		}
 	});
 	return parsed;
@@ -41,7 +51,6 @@ function parseCommand(inputCommands) {
 
 function elapsedTime(startTime, endTime) {
 	let elapsed = endTime.getTime() / 1000 - startTime.getTime() / 1000;
-	// let hour = parseInt(parseInt(elapsed / 60) / 60).toString();
 	let min = parseInt(elapsed / 60).toString();
 	let sec = parseInt(elapsed - min * 60).toString();
 
@@ -80,19 +89,40 @@ async function game({ rubiksCube, commandCount, startTime }) {
 		console.log('wrong input\n');
 		return { isEnd: false };
 	}
-
 	const parsedCommands = parseCommand(values);
-	// console.log(parsedCommands);
-	for (let command of parsedCommands) {
+	return run(rubiksCube, parsedCommands, commandCount, startTime);
+}
+
+function run(rubiksCube, parsedCommands, commandCount, startTime) {
+	for (const [i, command] of parsedCommands.entries()) {
 		if (command === 'Q') {
 			console.log(`경과시간: ${elapsedTime(startTime, new Date())}`);
-			console.log(`조작갯수: ${commandCount}`);
+			console.log(`조작갯수: ${commandCount + i}`);
 			console.log(`이용해주셔서 감사합니다. 뚜뚜뚜.`);
-
 			return { isEnd: true };
-		} else {
-			console.log(`${command}\n${rubiksCube.operate(command)}`);
+		}
+		console.log(`${command}\n${rubiksCube.operate(command)}`);
+		if (isAllCorrect(rubiksCube)) {
+			console.log(`경과시간: ${elapsedTime(startTime, new Date())}`);
+			console.log(`조작갯수: ${commandCount + i + 1}`);
+			console.log(`이용해주셔서 감사합니다. 뚜뚜뚜.`);
+			return { isEnd: true };
 		}
 	}
 	return { isEnd: false, commandCount: parsedCommands.length };
+}
+function isAllCorrect(rubiksCube) {
+	let result = true;
+	for (const [i, [side, node]] of Object.entries(Object.entries(rubiksCube.cube))) {
+		let checker = node.plane.data[0][0];
+		node.plane.data.forEach((row) => {
+			let isCorrect = row.every((data) => data === checker);
+			result = result && isCorrect;
+		});
+		if (!result) {
+			return result;
+		}
+	}
+	console.log('축하합니다! 큐브를 맞췄습니다!');
+	return result;
 }
