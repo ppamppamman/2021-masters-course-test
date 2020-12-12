@@ -9,19 +9,37 @@ class RubiksCube {
 RubiksCube.prototype.init = function () {
 	const planeSides = ['F', 'B', 'U', 'D', 'L', 'R'];
 	const colors = ['B', 'W', 'O', 'G', 'Y', 'R'];
-	let planes = {
-		F: null,
-		B: null,
-		U: null,
-		D: null,
-		L: null,
-		R: null,
-	};
+	let planes = {};
 
 	for (const [i, side] of planeSides.entries()) {
-		planes[side] = new PlaneNode(side, colors[i]);
+		let targetColors = Array(9).fill(colors[i]);
+		planes[side] = new PlaneNode().init(side, targetColors);
 	}
 	return planes;
+};
+
+RubiksCube.prototype.reset = function () {
+	this.cube = this.init();
+	return this.getCurrent();
+};
+
+RubiksCube.prototype.shuffle = function () {
+	const allColors = ['B', 'W', 'O', 'G', 'Y', 'R'];
+	let colors = [];
+	for (const color of allColors) {
+		colors.push(...color.repeat(9).split(''));
+	}
+	colors.sort(() => Math.random() - Math.random());
+
+	const planeSides = ['F', 'B', 'U', 'D', 'L', 'R'];
+	let planes = {};
+
+	for (const [i, side] of planeSides.entries()) {
+		let targetColors = colors.slice(i * 9, i * 9 + 9);
+		planes[side] = new PlaneNode().init(side, targetColors);
+	}
+	this.cube = planes;
+	return this.getCurrent();
 };
 
 // 현재 상태 확인
