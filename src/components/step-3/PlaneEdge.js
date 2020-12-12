@@ -18,10 +18,11 @@ PlaneEdge.prototype.init = function (planeSide) {
 };
 
 PlaneEdge.prototype.isLinkedTo = function (place) {
-	for (let [key, val] of Object.entries(place)) {
-		place[key] = this.isAt(val);
+	let targetPlace = JSON.parse(JSON.stringify(place)); //deep copy
+	for (let [key, val] of Object.entries(targetPlace)) {
+		targetPlace[key] = this.isAt(val);
 	}
-	return place;
+	return targetPlace;
 };
 
 PlaneEdge.prototype.isAt = function (place) {
