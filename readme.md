@@ -109,6 +109,177 @@ F'
 
 ### 코드설명
 
+app.js
+
+- input()  
+  readline을 활용해 유저의 입력을 받는다.  
+  @returns {Promise}
+
+- parseCommand()  
+  입력받은 커맨드를 올바르게 Array로 바꾼다.  
+  @param {string} inputCommands  
+  @returns {Array<string>}
+
+- isWrongCommand()  
+  입력받은 문자열의 포맷에 오류가 있는지 검사한다.  
+  @param {Array} inputCommands  
+  @returns {boolean}
+
+- isNumeric()  
+  입력받은 문자가 숫자로 바뀔 수 있는 문자인지 검사한다.  
+  @param {string} command  
+  @returns {boolean}
+
+- elapsedTime()  
+  경과 시간을 산출한다.  
+  @param {Date} startTime  
+  @param {Date} endTime  
+  @returns {string}
+
+- init()  
+  실행에 필요한 함수이며, game함수의 결과를 확인해 추가 실행 여부를 결정한다.
+
+- game()  
+  문자열 입력 과정부터 변환 과정까지를 진행시키며, 종료 커맨드 (Q, Ctrl+C)가 input 될 때까지 반복하도록 한다. 큐브를 초기화하는 .reset과 큐브를 랜덤하게 바꾸는 .shuffle 커맨드를 지원한다.  
+  @param {RubiksCube} rubiksCube  
+  @param {number} commandCount  
+  @param {Date} startTime  
+  @retruns {Object}
+
+- run()  
+  문자열 입력 과정부터 변환 과정까지를 진행시키며, 종료 커맨드 (Q, Ctrl+C)가 input 될 때까지 반복하도록 한다. 큐브를 초기화하는 .reset과 큐브를 랜덤하게 바꾸는 .shuffle 커맨드를 지원한다.  
+  @param {RubiksCube} rubiksCube  
+  @param {Array<string>} parsedCommands  
+  @param {number} commandCount  
+  @param {Date} startTime  
+  @retruns {Object}
+
+- isAllCorrect()  
+   큐브를 검사하여 다 맞았는지의 여부를 확인한다.  
+   @param {RubiksCube} rubiksCube  
+   @retruns {boolean}
+  planeCube.js
+
+RubiksCube.js
+
+- constructor  
+  초기 상태를 담는다.  
+  @attr {Object} this.cube
+
+- init()
+  큐브를 만든다.  
+  @returns {Object}
+
+- reset()  
+  초기 상태로 되돌리며, 해당 상태를 리턴한다.  
+  @returns {Object}
+
+- shuffle()
+  (추가 구현사항) 큐브를 섞고, 해당 상태를 리턴한다.  
+  @returns {string}
+
+- getCurrent()  
+  현재 상태를 출력할 수 있도록 string을 만들어 리턴한다.  
+  @returns {string}
+
+- operate()  
+  큐브의 작동을 커맨드에 맞게 결정한다.  
+  @param {string} command  
+  @returns {string}
+
+- rotateForward()
+  면 정보를 받아 정방향으로 큐브 면을 회전한다.  
+  @param {string} side
+
+- rotateBackward()
+  면 정보를 받아 역방향으로 큐브 면을 회전한다.  
+  @param {string} side
+
+- rotatePlaneForward()
+  plane 정보를 받아 정방향으로 Plane을 돌릴 수 있도록 Plane의 메소드를 호출한다.  
+  @param {Plane} plane
+
+- rotatePlaneForward()
+  plane 정보를 받아 역방향으로 Plane을 돌릴 수 있도록 Plane의 메소드를 호출한다.  
+  @param {Plane} plane
+
+- rotateEdgesForward()
+  Plane의 회전에 맞춰 edges 정보를 받아 정방향으로 Edge를 돌린다.  
+  @param {PlaneEdge} edges
+
+- rotateEdgesBackward()
+  Plane의 회전에 맞춰 edges 정보를 받아 역방향으로 Edge를 돌린다.  
+  @param {PlaneEdge} edges
+
+PlaneNode.js
+
+- constructor  
+  초기 상태를 담는다.  
+  @attr {Plane} this.plane  
+  @attr {PlaneEdge} this.edges
+
+- init()
+  노드 데이터를 만들어 할당한다.  
+  @param {string} planeSide  
+  @param {Array} colors  
+  @returns {PlaneNode}
+
+Plane.js
+
+- constructor  
+  초기 상태를 담는다.  
+  @attr {Array} this.data
+
+- init()
+  Plane 데이터를 만들어 할당한다.  
+  @param {Array} colors  
+  @returns {Plane}
+
+- getData()
+  인덱스를 받아 해당 인덱스의 데이터를 반환한다.  
+  @param {Array} indexes  
+  @returns {Array}
+
+- setData()
+  인덱스와 데이터를 받아 정해진 위치에 값을 저장한다.  
+  @param {Array} indexes  
+  @param {Array} newLine
+
+- rotateForward()
+  시계방향 기준 정방향으로 회전한다.
+
+- rotateBackward()
+  시계방향 기준 역방향으로 회전한다.
+
+PlaneEdge.js
+
+- constructor  
+  초기 상태를 담는다.  
+  @attr {Object} this.top  
+  @attr {Object} this.right  
+  @attr {Object} this.bottom  
+  @attr {Object} this.left
+
+- init()
+  PlaneEdge 데이터를 만들어 할당한다.  
+  @param {string} planeSide  
+  @returns {PlaneEdge}
+
+- isLinkedTo()
+  위치를 의미하는 데이터 place를 받아 연결해줘야 할 데이터를 업데이트 하고 반환한다.
+  @param {string} place  
+  @returns {Object}
+
+- isAt()
+  정해진 인덱스 데이터를 할당한다.  
+  @param {string} place  
+  @returns {Array}
+
+util.js
+
+- PLANE_SIDE  
+  enum처럼 활용하기 위한 면 정보 Object
+
 ---
 
 ## 과제 설명
