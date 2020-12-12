@@ -11,7 +11,12 @@ npm start
 ```
 
 - 사용
-
+```
+CUBE> .reset
+  //큐브가 리셋됩니다.
+CUBE> .shuffle
+  //큐브가 랜덤하게 섞입니다.
+```
 ```
                     O O O
                     O O O
