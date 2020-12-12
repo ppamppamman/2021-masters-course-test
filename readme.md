@@ -4,8 +4,8 @@
 
 ## 드리는 말
 
-- 각 프로젝트는 각 step의 branch에 독립적으로 관리되고 있습니다.
-- master branch는 readme파일만을 지니고 있습니다.
+- 각 프로젝트의 소스 코드는 각 step의 branch에서 독립적으로 관리되고 있습니다.
+- 이에 따라 master branch는 readme파일만을 지니고 있도록 구성하였습니다.
 
 감사합니다.
 
