@@ -71,7 +71,7 @@ export async function init() {
 
 	while (true) {
 		let status = await game({ rubiksCube, commandCount, startTime });
-		if (status.commandCount !== undefined) {
+		if (status.commandCount !== undefined ) {
 			commandCount += status.commandCount;
 		}
 		if (status.isEnd) {
@@ -84,10 +84,10 @@ async function game({ rubiksCube, commandCount, startTime }) {
 	let values = await input();
 	if (values === '.reset') {
 		console.log(`reset complete\n${rubiksCube.reset()}`);
-		return { isEnd: false };
+		return { isEnd: false, commandCount: -commandCount };
 	} else if (values === '.shuffle') {
 		console.log(`shuffle complete\n${rubiksCube.shuffle()}`);
-		return { isEnd: false };
+		return { isEnd: false, commandCount: -commandCount };
 	} else if (isWrongCommand(values)) {
 		console.log('wrong input\n');
 		return { isEnd: false };
@@ -114,6 +114,7 @@ function run(rubiksCube, parsedCommands, commandCount, startTime) {
 	}
 	return { isEnd: false, commandCount: parsedCommands.length };
 }
+
 function isAllCorrect(rubiksCube) {
 	let result = true;
 	for (const [i, [side, node]] of Object.entries(Object.entries(rubiksCube.cube))) {
