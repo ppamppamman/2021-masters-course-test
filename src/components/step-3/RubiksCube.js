@@ -52,7 +52,7 @@ RubiksCube.prototype.getCurrent = function () {
 		});
 		currentCube[side] = result;
 	}
-	let status = createPrintableStatus(currentCube);
+	let status = this.createPrintableStatus(currentCube);
 	return status;
 };
 
