@@ -11,7 +11,10 @@ npm start
 ```
 
 - 사용
-
+```
+CUBE> .reset //큐브가 리셋됩니다.  
+Ctrl+c //프로젝트가 종료됩니다.
+```
 ```
 R R W
 G C W
