@@ -1,18 +1,20 @@
 class Plane {
-	constructor(color) {
-		this.data = this.init(color);
+	constructor() {
+		this.data = null;
 	}
 }
 
-Plane.prototype.init = function (color) {
+Plane.prototype.init = function (colors) {
 	const rows = Array(3).fill([]);
 	for (const [i, row] of rows.entries()) {
-		rows[i] = Array(3).fill(color);
+		rows[i] = Array(3).fill(null);
+		for (const [j, col] of rows[i].entries()) {
+			rows[i][j] = colors[i * 3 + j];
+		}
 	}
-	return rows;
+	this.data = rows;
+	return this;
 };
-
-Plane.prototype.randomizeInit = function () {}; // 향후 랜덤 처리를 위한 함수
 
 // 데이터 불러오기
 Plane.prototype.getData = function (indexes) {
