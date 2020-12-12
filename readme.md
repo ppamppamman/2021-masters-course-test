@@ -140,14 +140,15 @@ app.js
   실행에 필요한 함수이며, game함수의 결과를 확인해 추가 실행 여부를 결정한다.
 
 - game()  
-  문자열 입력 과정부터 변환 과정까지를 진행시키며, 종료 커맨드 (Q, Ctrl+C)가 input 될 때까지 반복하도록 한다. 큐브를 초기화하는 .reset과 큐브를 랜덤하게 바꾸는 .shuffle 커맨드를 지원한다.  
+  문자열 입력 과정부터 변환 과정까지를 진행시키며, 종료 커맨드 (Q, Ctrl+C)가 input 될 때까지 반복하도록 한다.  
+  큐브를 초기화하는 .reset과 큐브를 랜덤하게 바꾸는 .shuffle 커맨드를 지원한다.  
   @param {RubiksCube} rubiksCube  
   @param {number} commandCount  
   @param {Date} startTime  
   @retruns {Object}
 
 - run()  
-  문자열 입력 과정부터 변환 과정까지를 진행시키며, 종료 커맨드 (Q, Ctrl+C)가 input 될 때까지 반복하도록 한다. 큐브를 초기화하는 .reset과 큐브를 랜덤하게 바꾸는 .shuffle 커맨드를 지원한다.  
+  커맨드를 확인해 게임 진행여부를 결정한다.  
   @param {RubiksCube} rubiksCube  
   @param {Array<string>} parsedCommands  
   @param {number} commandCount  
@@ -166,7 +167,7 @@ RubiksCube.js
   초기 상태를 담는다.  
   @attr {Object} this.cube
 
-- init()
+- init()  
   큐브를 만든다.  
   @returns {Object}
 
@@ -174,7 +175,7 @@ RubiksCube.js
   초기 상태로 되돌리며, 해당 상태를 리턴한다.  
   @returns {Object}
 
-- shuffle()
+- shuffle()  
   (추가 구현사항) 큐브를 섞고, 해당 상태를 리턴한다.  
   @returns {string}
 
@@ -187,27 +188,27 @@ RubiksCube.js
   @param {string} command  
   @returns {string}
 
-- rotateForward()
+- rotateForward()  
   면 정보를 받아 정방향으로 큐브 면을 회전한다.  
   @param {string} side
 
-- rotateBackward()
+- rotateBackward()  
   면 정보를 받아 역방향으로 큐브 면을 회전한다.  
   @param {string} side
 
-- rotatePlaneForward()
+- rotatePlaneForward()  
   plane 정보를 받아 정방향으로 Plane을 돌릴 수 있도록 Plane의 메소드를 호출한다.  
   @param {Plane} plane
 
-- rotatePlaneForward()
+- rotatePlaneForward()  
   plane 정보를 받아 역방향으로 Plane을 돌릴 수 있도록 Plane의 메소드를 호출한다.  
   @param {Plane} plane
 
-- rotateEdgesForward()
+- rotateEdgesForward()  
   Plane의 회전에 맞춰 edges 정보를 받아 정방향으로 Edge를 돌린다.  
   @param {PlaneEdge} edges
 
-- rotateEdgesBackward()
+- rotateEdgesBackward()  
   Plane의 회전에 맞춰 edges 정보를 받아 역방향으로 Edge를 돌린다.  
   @param {PlaneEdge} edges
 
@@ -218,7 +219,7 @@ PlaneNode.js
   @attr {Plane} this.plane  
   @attr {PlaneEdge} this.edges
 
-- init()
+- init()  
   노드 데이터를 만들어 할당한다.  
   @param {string} planeSide  
   @param {Array} colors  
@@ -230,25 +231,25 @@ Plane.js
   초기 상태를 담는다.  
   @attr {Array} this.data
 
-- init()
+- init()  
   Plane 데이터를 만들어 할당한다.  
   @param {Array} colors  
   @returns {Plane}
 
-- getData()
+- getData()  
   인덱스를 받아 해당 인덱스의 데이터를 반환한다.  
   @param {Array} indexes  
   @returns {Array}
 
-- setData()
+- setData()  
   인덱스와 데이터를 받아 정해진 위치에 값을 저장한다.  
   @param {Array} indexes  
   @param {Array} newLine
 
-- rotateForward()
+- rotateForward()  
   시계방향 기준 정방향으로 회전한다.
 
-- rotateBackward()
+- rotateBackward()  
   시계방향 기준 역방향으로 회전한다.
 
 PlaneEdge.js
@@ -260,17 +261,17 @@ PlaneEdge.js
   @attr {Object} this.bottom  
   @attr {Object} this.left
 
-- init()
+- init()  
   PlaneEdge 데이터를 만들어 할당한다.  
   @param {string} planeSide  
   @returns {PlaneEdge}
 
-- isLinkedTo()
-  위치를 의미하는 데이터 place를 받아 연결해줘야 할 데이터를 업데이트 하고 반환한다.
+- isLinkedTo()  
+  위치를 의미하는 데이터 place를 받아 연결해줘야 할 데이터를 업데이트 하고 반환한다.  
   @param {string} place  
   @returns {Object}
 
-- isAt()
+- isAt()  
   정해진 인덱스 데이터를 할당한다.  
   @param {string} place  
   @returns {Array}
@@ -284,7 +285,7 @@ util.js
 
 ## 과제 설명
 
-### 2단계: 루빅스 큐브 구현하기
+### 3단계: 루빅스 큐브 구현하기
 
 - 참고 링크를 참고해서 루빅스 큐브를 구현한다.
 - 큐브는 W, B, G, Y, O, R의 6가지 색깔을 가지고 있다.
