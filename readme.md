@@ -11,7 +11,9 @@ npm start
 ```
 
 - 사용
-
+```
+Ctrl+c //프로젝트가 종료됩니다.
+```
 ```
 > apple 3 L
 leapp
