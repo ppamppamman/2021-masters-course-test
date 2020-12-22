@@ -7,6 +7,9 @@ export const PLANE_SIDE = {
 	R: [{ U: 'right column' }, { B: 'left column' }, { D: 'right column' }, { F: 'right column' }],
 };
 
+export const PLANE_SIDES = ['F', 'B', 'U', 'D', 'L', 'R'];
+export const COLORS = ['B', 'W', 'O', 'G', 'Y', 'R'];
+
 // 12/22 2차 테스트 개선 코드 1 -2
 export function isNotValidData(newLine) {
   if (newLine.length === 0) {
@@ -18,4 +21,13 @@ export function isNotValidData(newLine) {
 // 12/22 2차 테스트 개선코드 2 -2
 export function copyData(data) {
   return JSON.parse(JSON.stringify(data));
+}
+
+export function randomizeColors(standardColors) {
+  let colorsArr = [];
+  for (const color of standardColors) {
+		colorsArr.push(...color.repeat(9).split(''));
+	}
+  colorsArr.sort(() => Math.random() - Math.random());
+  return colorsArr;
 }

@@ -1,4 +1,5 @@
 import PlaneNode from './PlaneNode.js';
+import {PLANE_SIDES, COLORS, randomizeColors} from './util.js'
 
 class RubiksCube {
 	constructor() {
@@ -6,10 +7,14 @@ class RubiksCube {
 	}
 }
 
+// 12/22 개선 3
 RubiksCube.prototype.init = function () {
-	const planeSides = ['F', 'B', 'U', 'D', 'L', 'R'];
-	const colors = ['B', 'W', 'O', 'G', 'Y', 'R'];
-	let planes = {};
+	// const planeSides = ['F', 'B', 'U', 'D', 'L', 'R'];
+  // const colors = ['B', 'W', 'O', 'G', 'Y', 'R'];
+  const planeSides = PLANE_SIDES;
+	const colors = COLORS;
+  
+  let planes = {};
 
 	for (const [i, side] of planeSides.entries()) {
 		let targetColors = Array(9).fill(colors[i]);
@@ -23,15 +28,15 @@ RubiksCube.prototype.reset = function () {
 	return this.getCurrent();
 };
 
+// 12/22 개선 3, 4
 RubiksCube.prototype.shuffle = function () {
-	const allColors = ['B', 'W', 'O', 'G', 'Y', 'R'];
-	let colors = [];
-	for (const color of allColors) {
-		colors.push(...color.repeat(9).split(''));
-	}
-	colors.sort(() => Math.random() - Math.random());
-
-	const planeSides = ['F', 'B', 'U', 'D', 'L', 'R'];
+  // const allColors = ['B', 'W', 'O', 'G', 'Y', 'R'];
+  const standardColors = COLORS;
+  
+  // let colors = [];
+  const colors = randomizeColors(standardColors);
+  
+  const planeSides = PLANE_SIDES;
 	let planes = {};
 
 	for (const [i, side] of planeSides.entries()) {
