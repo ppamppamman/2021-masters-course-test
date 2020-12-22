@@ -6,3 +6,11 @@ export const PLANE_SIDE = {
 	L: [{ U: 'left column' }, { F: 'left column' }, { D: 'left column' }, { B: 'right column' }],
 	R: [{ U: 'right column' }, { B: 'left column' }, { D: 'right column' }, { F: 'right column' }],
 };
+
+//12/22 2차 테스트 개선 코드 1 -2
+export function isNotValidData(newLine) {
+  if (newLine.length === 0) {
+		return true;
+	}
+  return false;
+}

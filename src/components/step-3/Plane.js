@@ -1,3 +1,5 @@
+import { isNotValidData } from './util.js'
+
 class Plane {
 	constructor() {
 		this.data = null;
@@ -27,10 +29,21 @@ Plane.prototype.getData = function (indexes) {
 };
 
 // 데이터 저장하기
+// 12/22 2차 테스트 기존코드 1
+// Plane.prototype.setData = function (indexes, newLine) {
+// 	if (newLine.length === 0) {
+// 		return;
+// 	}
+// 	for (const [i, indexSet] of indexes.entries()) {
+// 		this.data[indexSet[0]][indexSet[1]] = newLine[i];
+// 	}
+// };
+
+//12/22 2차 테스트 개선 코드 1 -1
 Plane.prototype.setData = function (indexes, newLine) {
-	if (newLine.length === 0) {
-		return;
-	}
+  if (isNotValidData(newLine)) {
+    return;
+  };
 	for (const [i, indexSet] of indexes.entries()) {
 		this.data[indexSet[0]][indexSet[1]] = newLine[i];
 	}
